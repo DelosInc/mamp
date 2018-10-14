@@ -85,10 +85,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_import) {
-                Intent intent = new Intent(this, ImportActivity.class);
-                startActivity(intent);
+            Intent import_activity = new Intent(this, ImportActivity.class);
+            startActivity(import_activity);
 
         } else if (id == R.id.nav_library) {
+            Intent library_activity = new Intent(this, LibraryActivity.class);
+            startActivity(library_activity);
 
         } else if (id == R.id.nav_playlist) {
 
