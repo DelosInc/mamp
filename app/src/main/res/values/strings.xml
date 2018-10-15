@@ -11,5 +11,6 @@
     <string name="library_tab_text_1">Songs</string>
     <string name="library_tab_text_2">Albums</string>
     <string name="library_tab_text_3">Artists</string>
+    <string name="library_tab_text_4">Search</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
