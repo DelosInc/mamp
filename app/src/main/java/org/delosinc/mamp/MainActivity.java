@@ -13,10 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.net.Uri;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    static final int PICKFILE_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This is an unhealthy habit just drop it already.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                importMusic(PICKFILE_REQUEST_CODE);
             }
         });
 
@@ -44,7 +47,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public void importMusic(int CODE){
+        Intent import_music = new Intent(Intent.ACTION_GET_CONTENT);
+        import_music.setType("file/*");
+        import_music.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(import_music, CODE);
+    }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent file) {
+        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            Uri fileUri = file.getData();
+            Toast.makeText(getBaseContext(),fileUri.toString(),Toast.LENGTH_SHORT).show();
+            // Do work with full size photo saved at fullPhotoUri
+            super.onActivityResult(requestCode, resultCode, file);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -56,6 +75,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
