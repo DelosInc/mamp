@@ -47,22 +47,19 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void importMusic(int CODE){
-        Intent import_music = new Intent(Intent.ACTION_GET_CONTENT);
-        import_music.setType("file/*");
-        import_music.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(import_music, CODE);
+    @Override
+    protected void onStart(){
+        super.onStart();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent file) {
-        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            Uri fileUri = file.getData();
-            Toast.makeText(getBaseContext(),fileUri.toString(),Toast.LENGTH_SHORT).show();
-            // Do work with full size photo saved at fullPhotoUri
-            super.onActivityResult(requestCode, resultCode, file);
-        }
+    protected void onPause(){
+        super.onPause();
     }
 
     @Override
@@ -75,14 +72,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-    }
-    @Override
-    protected void onResume(){
-        super.onResume();
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,8 +103,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_import) {
-            Intent import_activity = new Intent(this, ImportActivity.class);
-            startActivity(import_activity);
+            importMusic(PICKFILE_REQUEST_CODE);
 
         } else if (id == R.id.nav_library) {
             Intent library_activity = new Intent(this, LibraryActivity.class);
@@ -133,4 +123,39 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent file) {
+        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PICKFILE_REQUEST_CODE:
+                    if (resultCode == RESULT_OK) {
+                        Uri fileUri = file.getData();
+                        Toast.makeText(getBaseContext(),fileUri.toString(),Toast.LENGTH_SHORT).show();
+                        // Do work with full size photo saved at fullPhotoUri
+                        super.onActivityResult(requestCode, resultCode, file);
+                    }
+                    break;
+            }
+
+        }
+    }
+
+    public void importMusic(int FILE_SELECT_CODE){
+        Intent import_music = new Intent(Intent.ACTION_GET_CONTENT);
+        import_music.setType("*/*");
+        import_music.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            //startActivityForResult(import_music, CODE);
+            startActivityForResult(
+                    Intent.createChooser(import_music, "Select a File to Upload"),
+                    FILE_SELECT_CODE);
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
