@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion 27
 
     defaultConfig {
         applicationId "org.delosinc.mamp"
@@ -24,9 +22,10 @@ android {
     }
 
 }
-
+32
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.mpatric:mp3agic:0.9.1'
 
     implementation 'com.android.support:appcompat-v7:27.0.0'
     implementation 'com.android.support:support-v4:27.0.0'
