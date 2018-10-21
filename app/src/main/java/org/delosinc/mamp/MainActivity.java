@@ -1,5 +1,6 @@
 package org.delosinc.mamp;
 
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static final int PICKFILE_REQUEST_CODE = 1;
+    public static sqliteHelper helpersql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        helpersql=new sqliteHelper(this,"tablename.sqlite",null,1);
+        helpersql.queryData("CREATE TABLE IF NOT EXISTS tablename(attributes));
+
     }
 
     @Override
