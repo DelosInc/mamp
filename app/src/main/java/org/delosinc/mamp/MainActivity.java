@@ -18,11 +18,14 @@ import android.net.Uri;
 import android.content.Intent;
 import android.widget.Toast;
 
+import ch.blinkenlights.bastp.Bastp;
+
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static final int PICKFILE_REQUEST_CODE = 1;
-    public static sqliteHelper helpersql;
+    //public static sqliteHelper helpersql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        helpersql=new sqliteHelper(this,"tablename.sqlite",null,1);
-        helpersql.queryData("CREATE TABLE IF NOT EXISTS tablename(attributes));
+        //helpersql=new sqliteHelper(this,"tablename.sqlite",null,1);
+        //helpersql.queryData("CREATE TABLE IF NOT EXISTS tablename(attributes)");
 
     }
 
